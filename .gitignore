@@ -1,7 +1,7 @@
 .git/
-java25/.gradle/
-java25/.idea/
-java25/build/
+java_se/.gradle/
+java_se/.idea/
+java_se/build/
 spring/rest/.gradle/
 spring/rest/.idea/
 spring/rest/build/
