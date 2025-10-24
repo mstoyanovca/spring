@@ -5,3 +5,4 @@
 spring/*/.gradle/
 spring/*/.idea/
 spring/*/build/
+spring/oauth2/src/main/resources/application.properties
