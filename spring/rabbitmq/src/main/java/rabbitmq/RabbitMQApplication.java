@@ -14,17 +14,17 @@ import rabbitmq.service.Receiver;
 
 @SpringBootApplication
 public class RabbitMQApplication {
-    public static final String topicExchangeName = "spring-boot-exchange";
-    static final String queueName = "spring-boot";
+    public static final String TOPIC_EXCHANGE_NAME = "spring-boot-exchange";
+    private static final String QUEUE_NAME = "spring-boot";
 
     @Bean
     Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(QUEUE_NAME, false);
     }
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName);
+        return new TopicExchange(TOPIC_EXCHANGE_NAME);
     }
 
     @Bean
@@ -33,18 +33,17 @@ public class RabbitMQApplication {
     }
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
+    MessageListenerAdapter listenerAdapter(Receiver receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
+    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(QUEUE_NAME);
+        container.setMessageListener(listenerAdapter);
+        return container;
     }
 
     static void main(String[] args) {
