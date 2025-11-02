@@ -1,8 +1,7 @@
 package reactive.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import reactive.entity.Customer;
 
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    // Spring Data JPA creates a customerRepository implementation, when you run the application;
+public interface CustomerRepository extends R2dbcRepository<Customer, Long> {
 }

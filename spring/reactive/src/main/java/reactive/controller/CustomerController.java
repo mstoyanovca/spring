@@ -1,14 +1,11 @@
 package reactive.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactive.entity.Customer;
 import reactive.repository.CustomerRepository;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/customer")
@@ -20,25 +17,20 @@ public class CustomerController {
         this.customerRepository = customerRepository;
     }
 
-    // this is what would be coming from an Angular front end:
-    /*@PostMapping(path = "/create")
-    public Customer create(@RequestBody Customer customer) {
-        return customer;
-    }*/
+    @PostMapping(path = "/create")
+    public Mono<Customer> create(@RequestBody Customer customer) {
+        return customerRepository.save(customer);
+    }
 
     @GetMapping(path = "/create")
-    public Customer create(@RequestParam String firstName, @RequestParam String lastName) {
+    public Mono<Customer> createFromName(@RequestParam String firstName, @RequestParam String lastName) {
         // http://localhost:8080/customer/create?firstName=Martin&lastName=Stoyanov
-        Customer customer = new Customer();
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        Customer savedCustomer = customerRepository.save(customer);
-        customer.setId(savedCustomer.getId());
-        return customer;
+        Customer customer = new Customer(firstName, lastName);
+        return customerRepository.save(customer);
     }
 
     @GetMapping(path = "/all")
-    public List<Customer> findAll() {
+    public Flux<Customer> findAll() {
         // http://localhost:8080/customer/all
         return customerRepository.findAll();
     }
