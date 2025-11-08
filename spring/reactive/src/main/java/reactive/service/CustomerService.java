@@ -28,13 +28,17 @@ public class CustomerService {
 
     public Flux<Customer> createCustomers() {
         LOGGER.info("createCustomers()");
-        List<Customer> customers = IntStream.rangeClosed(1, QUANTITY).boxed().map(i -> new Customer(null, "firstname" + i, "lastname" + i)).toList();
-        // @formatter:off
+
+        List<Customer> customers = IntStream
+                .rangeClosed(1, QUANTITY)
+                .boxed()
+                .map(i -> new Customer(null, "firstname" + i, "lastname" + i))
+                .toList();
+
         return customerRepository
                 .deleteAll()
                 .thenMany(customerRepository.saveAll(customers))
                 .thenMany(customerRepository.findAll())
                 .as(transactionalOperator::transactional);
-        //@formatter:on
     }
 }
