@@ -22,14 +22,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'io.asyncer:r2dbc-mysql'
-    implementation 'org.liquibase:liquibase-core'
-    implementation 'com.mysql:mysql-connector-j'
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.liquibase:liquibase-core'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     // tests:
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'io.r2dbc:r2dbc-h2'
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }
