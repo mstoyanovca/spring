@@ -19,7 +19,7 @@
   - ng serve
 * open at  http://localhost:4200/
 * other useful commands:
-  - git clone githuburl
+  - git clone git-hub-url
   - npm install
   - ng generate component my-component
   - ng generate service my-service
