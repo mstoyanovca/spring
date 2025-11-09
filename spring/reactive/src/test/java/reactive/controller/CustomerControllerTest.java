@@ -10,6 +10,7 @@ import reactive.entity.Customer;
 import reactive.service.CustomerService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -22,6 +23,7 @@ public class CustomerControllerTest {
     private CustomerService service;
 
     private final Customer customer1 = new Customer(1L, "firstName1", "lastName1");
+    private final Customer customer2 = new Customer(2L, "firstName2", "lastName2");
 
     @Test
     public void createFromPostTest() {
@@ -61,18 +63,41 @@ public class CustomerControllerTest {
 
     @Test
     public void allTest() {
-        Customer customer2 = new Customer(2L, "firstName2", "lastName2");
         when(service.findAll()).thenReturn(Flux.just(customer1, customer2));
 
         webTestClient.get()
                 .uri("/customer/all")
+                .accept(MediaType.TEXT_EVENT_STREAM)
                 .exchange()
-                .expectStatus().isOk();
-        //.expectHeader().contentType(MediaType.TEXT_EVENT_STREAM_VALUE)
-        //.expectBody(Customer.class).isEqualTo(customer);
+                .expectStatus().isOk()
+                .returnResult(Customer.class)
+                .getResponseBody()
+                .as(StepVerifier::create)
+                .expectNextMatches(event -> event.equals(customer1))
+                .expectNextMatches(event -> event.equals(customer2))
+                .thenCancel()
+                .verify();
 
         verify(service, times(1)).findAll();
     }
 
-    // loadtest
+    @Test
+    public void loadtestTest() {
+        when(service.loadTest()).thenReturn(Flux.just(customer1, customer2));
+
+        webTestClient.get()
+                .uri("/customer/loadtest")
+                .accept(MediaType.TEXT_EVENT_STREAM)
+                .exchange()
+                .expectStatus().isOk()
+                .returnResult(Customer.class)
+                .getResponseBody()
+                .as(StepVerifier::create)
+                .expectNextMatches(event -> event.equals(customer1))
+                .expectNextMatches(event -> event.equals(customer2))
+                .thenCancel()
+                .verify();
+
+        verify(service, times(1)).loadTest();
+    }
 }

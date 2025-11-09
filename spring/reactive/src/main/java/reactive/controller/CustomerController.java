@@ -39,7 +39,6 @@ public class CustomerController {
     public Flux<Customer> all() {
         // http://localhost:8080/customer/all
         LOGGER.info("findAll()");
-        // return customerRepository.findAll().delayElements(Duration.ofSeconds(1));
         return customerService.findAll();
     }
 
