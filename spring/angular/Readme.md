@@ -18,3 +18,8 @@
 * start the application:
   - (ng serve)
 * open at  http://localhost:4200/
+* other useful commands:
+  - ng generate component my-component
+  - ng generate service my-service
+  - npm start npx kill-port 4200
+  - ng test --main ./src/app/service/jwt/jwt.service.spec.ts
