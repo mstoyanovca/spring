@@ -30,5 +30,9 @@
   - npm install
   - ng generate component my-component
   - ng generate service my-service
+  - npm install bootstrap
+  - add to angular.json:
+    "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    "./node_modules/bootstrap/dist/css/bootstrap.min.css"
   - npm start npx kill-port 4200
   - ng test --main ./src/app/service/jwt/jwt.service.spec.ts
