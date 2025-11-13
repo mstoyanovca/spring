@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-public class UserTest {
+public class LoginUserTest {
     private static ValidatorFactory validatorFactory;
     private static Validator validator;
 
@@ -31,24 +31,24 @@ public class UserTest {
 
     @Test
     public void invalidEmailTest() {
-        User user = new User(null, "a", "123456", null);
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        LoginUser loginUser = new LoginUser(null, "a", "123456", null);
+        Set<ConstraintViolation<LoginUser>> violations = validator.validate(loginUser);
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo("Email is invalid");
     }
 
     @Test
     public void invalidPasswordTest() {
-        User user = new User(null, "a@a.com", "b", null);
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        LoginUser loginUser = new LoginUser(null, "a@a.com", "b", null);
+        Set<ConstraintViolation<LoginUser>> violations = validator.validate(loginUser);
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo("Password min length is 6 characters");
     }
 
     @Test
     public void validUserTest() {
-        User user = new User(null, "a@a.com", "123456", null);
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        LoginUser loginUser = new LoginUser(null, "a@a.com", "123456", null);
+        Set<ConstraintViolation<LoginUser>> violations = validator.validate(loginUser);
         assertThat(violations).hasSize(0);
     }
 }
