@@ -30,8 +30,13 @@ public class LoginUserTest {
     }
 
     @Test
+    public void noArgumentConstructorNeededForJpaTest() {
+        assertThat(new LoginUser()).isNotNull();
+    }
+
+    @Test
     public void invalidEmailTest() {
-        LoginUser loginUser = new LoginUser(null, "a", "123456", null);
+        LoginUser loginUser = new LoginUser(null, "a", "123456", Authority.DISABLED);
         Set<ConstraintViolation<LoginUser>> violations = validator.validate(loginUser);
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo("Email is invalid");
@@ -39,15 +44,23 @@ public class LoginUserTest {
 
     @Test
     public void invalidPasswordTest() {
-        LoginUser loginUser = new LoginUser(null, "a@a.com", "b", null);
+        LoginUser loginUser = new LoginUser(null, "a@a.com", "b", Authority.DISABLED);
         Set<ConstraintViolation<LoginUser>> violations = validator.validate(loginUser);
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo("Password min length is 6 characters");
     }
 
     @Test
-    public void validUserTest() {
+    public void nullAuthorityTest() {
         LoginUser loginUser = new LoginUser(null, "a@a.com", "123456", null);
+        Set<ConstraintViolation<LoginUser>> violations = validator.validate(loginUser);
+        assertThat(violations).hasSize(1);
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("Authority can not be null");
+    }
+
+    @Test
+    public void validUserTest() {
+        LoginUser loginUser = new LoginUser(null, "a@a.com", "123456", Authority.DISABLED);
         Set<ConstraintViolation<LoginUser>> violations = validator.validate(loginUser);
         assertThat(violations).hasSize(0);
     }

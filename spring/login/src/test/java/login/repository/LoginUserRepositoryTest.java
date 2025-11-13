@@ -13,7 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-//@ExtendWith(SpringExtension.class)
+@ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class LoginUserRepositoryTest {
     @Autowired
@@ -28,7 +28,7 @@ public class LoginUserRepositoryTest {
     void findByEmailAndPasswordTest() {
         LoginUser loginUser = new LoginUser(1L, "a@a.com", "password", Authority.DISABLED);
         repository.save(loginUser);
-        assertThat(loginUser.id()).isNotNull();
+        assertThat(loginUser.getId()).isNotNull();
         assertThat(repository.findByEmailAndPassword("a@a.com", "password")).isNotNull();
     }
 }
