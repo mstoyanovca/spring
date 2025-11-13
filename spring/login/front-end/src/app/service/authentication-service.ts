@@ -8,8 +8,10 @@ import { User } from '../model/user';
 export class AuthenticationService {
     private http = inject(HttpClient);
 
-    login(email: string, password: string) {
-        console.log("Logging in with email = " + email);
-        return this.http.post<User>('/login', {email, password});
+    login(user: User) {
+        console.log("Logging in with email = " + user.email);
+        return this.http.post<User>('http://localhost:8080/login', user).subscribe(response => {
+            console.log('response = ', response);
+        });
     }
 }

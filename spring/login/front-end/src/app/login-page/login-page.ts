@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { inject } from '@angular/core';
 import { User } from '../model/user';
+import { AuthenticationService } from '../service/authentication-service';
 
 @Component({
   selector: 'app-login-page',
@@ -11,11 +13,12 @@ import { User } from '../model/user';
   styleUrl: './login-page.css',
 })
 export class LoginPage {
-    user = new User(1, '', '');
-    submitted = false;
+    private service = inject(AuthenticationService);
+
+    user = new User(0, '', '');
 
     onSubmit() {
         console.log('onSubmit()');
-        this.submitted = true;
+        this.service.login(this.user);
     }
 }

@@ -22,11 +22,14 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" id="password" name="password" [(ngModel)]="user.password"
-                               #password="ngModel" class="form-control form-control-sm" required>
+                               #password="ngModel" class="form-control form-control-sm" required minlength="6">
                         @if (password.invalid && (password.dirty || password.touched)) {
                         <div class="alert alert-danger alert-small mt-2">
                             @if (password.hasError('required')) {
                             <div>Password is required</div>
+                            }
+                            @if (password.hasError('minlength')) {
+                            <div>Password min length is 6 characters</div>
                             }
                         </div>
                         }

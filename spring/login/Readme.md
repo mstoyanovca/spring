@@ -12,27 +12,27 @@
 * Angular
 
 ## Create Angular front end:
-* download the latest Node.js LTS version
-* install Node.js
-* reboot
-* check Node.js installation from Git Bash:
+- download the latest Node.js LTS version
+- install Node.js
+- reboot
+- check Node.js installation from Git Bash:
   - node -v
   - npm -v
-* install Angular CLI:
+- install Angular CLI:
   - npm install -g @angular/cli
-* create a new Angular project:
+- create a new Angular project:
   - ng new front-end
-* start the application:
+- start the application:
   - ng serve
-* open at  http://localhost:4200/
-* other useful commands:
+- open at  http://localhost:4200/
+- other useful commands:
   - git clone git-hub-url
   - npm install
   - ng generate component my-component
   - ng generate service my-service
   - npm install bootstrap
   - add to angular.json:
-    "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-    "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+    - "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    - "./node_modules/bootstrap/dist/css/bootstrap.min.css"
   - npm start npx kill-port 4200
   - ng test --main ./src/app/service/jwt/jwt.service.spec.ts
