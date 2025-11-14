@@ -14,4 +14,9 @@ public class LoginController {
     public ResponseEntity<LoginUser> login(@RequestBody @Valid LoginUser user) {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
+    // POST -   create - HttpStatus.CREATED
+    // GET -    read   - HttpStatus.OK / HttpStatus.NOT_FOUND
+    // PUT -    update - HttpStatus.OK / HttpStatus.NOT_FOUND
+    // DELETE - delete - HttpStatus.NO_CONTENT / HttpStatus.NOT_FOUND
 }
